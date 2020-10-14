@@ -4,6 +4,7 @@
   "description": "an app that uses a database in SQL to track and input data for employee's of a company.",
   "main": "tracker.js",
   "scripts": {
+    "start": "node tracker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/glitch-ed/my_ee_tracker#readme",
   "dependencies": {
     "console.table": "^0.10.0",
+    "dotenv": "^8.2.0",
     "inquirer": "^7.3.3",
     "mysql": "^2.18.1"
   }

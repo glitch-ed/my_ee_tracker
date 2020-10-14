@@ -1,12 +1,13 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const conTb = require("console.table");
+
+require("dotenv").config();
 
 const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Orioles7!",
+    password: process.env.PASSWORD,
     database: "eeDB"
 });
 
@@ -68,6 +69,7 @@ function runTracker() {
                 break;
             
             case "Done":
+                console.log("All Your Database Are Belong To Us.")
                 connection.end();
                 break;
         }
@@ -236,7 +238,7 @@ function updateEmployeeRole() {
 function deleteEmployee() {
     inquirer
         .prompt({
-            name: "employeeRemove",
+            name: "employee",
             type: "input",
             message: "Enter Employee ID",
 
@@ -244,7 +246,7 @@ function deleteEmployee() {
         .then(function(answer) {
             console.log(answer);
             let query = "DELETE FROM employee WHERE ?";
-            let newId = Number(answer.employeeRemove);
+            let newId = Number(answer.employee);
             connection.query(query, { id: newId }, function(err, res) {
                 console.log("Employee has been deleted!")
                 runTracker();
