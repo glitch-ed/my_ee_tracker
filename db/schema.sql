@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS employeesDB;
-CREATE DATABASE employeesDB;
+DROP DATABASE IF EXISTS eeDB;
+CREATE DATABASE eeDB;
 
-USE employeesDB;
+USE eeDB;
 
 CREATE TABLE department (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -11,7 +11,7 @@ CREATE TABLE department (
 CREATE TABLE role (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30),
-    salary DECIMAL(5,2),
+    salary INTEGER,
     department_id INT NOT NULL,
     FOREIGN KEY (department_id) REFERENCES department(id)
 );
@@ -22,6 +22,5 @@ CREATE TABLE employee (
     last_name VARCHAR(30) NOT NULL, 
     manager_id INT,
     role_id INT,
-    FOREIGN KEY (role_id) REFERENCES role(id),
-    FOREIGN KEY (manager_id) REFERENCES employee(id)
+   
 );
