@@ -12,6 +12,7 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
+    console.log("all you database are belong to us.")
     runTracker();
 });
 
@@ -28,7 +29,7 @@ function runTracker() {
             "View All Departments",
             "View All Roles",
             "Update Employee Role",
-            "Remove Employee",
+            "Delete Employee",
             "Done"
         ] 
     }).then(function(answer) {
@@ -40,9 +41,9 @@ function runTracker() {
 
             case "Add New Department":
                 addDept();
-         -Abreak;
+                break;
 
-            case "Add New Role":
+            case "Add New Role":    
                 addRole();
                 break;
 
@@ -59,11 +60,11 @@ function runTracker() {
                 break;
 
             case "Update Employee Role":
-                updateEmployee();
+                updateEmployeeRole();
                 break;
             
-            case "Remove":
-                removeEmployee();
+            case "Delete Employee":
+                deleteEmployee();
                 break;
             
             case "Done":
@@ -156,7 +157,7 @@ function addRole() {
         },
         {
             type: "input",
-            name: "deptid",
+            name: "deptId",
             message: "What is the department id for the new role?:"
         }
     ]).then(function(result) {
@@ -164,7 +165,7 @@ function addRole() {
             "INSERT INTO role SET ?", {
                 title: result.newrole,
                 salary: result.newsalary,
-                department_id: result.deptid
+                department_id: result.deptId
             },
             function(err) {
                 if (err) throw err;
@@ -187,12 +188,69 @@ function viewEmployees() {
 function viewDept() {
     connection.query("SELECT * FROM department", function(err, res) {
         if (err) throw err;
-        console.log("\n Departments found in database: \n");
+        console.log("\n Employee Departments: \n");
         console.table(res);
-        askTracker();
+        runTracker();
     });
 };
 
+function viewRoles() {
+    connection.query("SELECT * from role",
+        function(err, res) {
+            if (err) throw err;
+            console.log("\n Employee Roles: \n");
+            console.table(res);
+            runTracker();
+        });
+};
+
+function updateEmployeeRole() {
+    inquirer.prompt({
+            type: "input",
+            name: "id",
+            message: "Enter employee ID:",
+        })
+        .then(function(answer) {
+            var id = answer.id;
+
+            inquirer
+                .prompt({
+                    type: "input",
+                    name: "roleId",
+                    message: "Enter employee's new role ID",
+                })
+                .then(function(answer) {
+                    let roleId = answer.roleId;
+
+                    let query = "UPDATE employee SET role_id=? WHERE id=?";
+                    connection.query(query, [roleId, id], function(err, res) {
+                        if (err) {
+                            console.table(res);
+                        }
+                        runTracker();
+                    });
+                });
+        });
+};
+
+function deleteEmployee() {
+    inquirer
+        .prompt({
+            name: "employeeRemove",
+            type: "input",
+            message: "Enter Employee ID",
+
+        })
+        .then(function(answer) {
+            console.log(answer);
+            let query = "DELETE FROM employee WHERE ?";
+            let newId = Number(answer.employeeRemove);
+            connection.query(query, { id: newId }, function(err, res) {
+                console.log("Employee has been deleted!")
+                runTracker();
+            });
+        });
+}
 
 
 
