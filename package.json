@@ -1,0 +1,24 @@
+{
+  "name": "my_ee_tracker",
+  "version": "1.0.0",
+  "description": "an app that uses a database in SQL to track and input data for employee's of a company.",
+  "main": "tracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glitch-ed/my_ee_tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glitch-ed/my_ee_tracker/issues"
+  },
+  "homepage": "https://github.com/glitch-ed/my_ee_tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.3.3",
+    "mysql": "^2.18.1"
+  }
+}
