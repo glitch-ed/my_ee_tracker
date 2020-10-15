@@ -34,7 +34,6 @@ function runTracker() {
             "Done"
         ] 
     }).then(function(answer) {
-        console.log(answer);
         switch (answer.choice) {
             case "Add New Employee":
                 addEmployee();
@@ -244,12 +243,10 @@ function deleteEmployee() {
 
         })
         .then(function(answer) {
-            console.log(answer);
             let query = "DELETE FROM employee WHERE ?";
-            let newId = Number(answer.employee);
-            console.log(newId)
-            connection.query(query, { id: newId }, function(err, res) {
-                console.log("Employee has been deleted!")
+            let eeId = Number(answer.employee);
+            connection.query(query, { id: eeId }, function() {
+            console.log("Employee has been deleted!")
                 runTracker();
             });
         });
