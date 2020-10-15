@@ -179,7 +179,7 @@ function addRole() {
 };
 
 function viewEmployees() {
-    connection.query("SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
+    connection.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
         function(err, res) {
             if (err) throw err
             console.table(res)
@@ -247,6 +247,7 @@ function deleteEmployee() {
             console.log(answer);
             let query = "DELETE FROM employee WHERE ?";
             let newId = Number(answer.employee);
+            console.log(newId)
             connection.query(query, { id: newId }, function(err, res) {
                 console.log("Employee has been deleted!")
                 runTracker();
